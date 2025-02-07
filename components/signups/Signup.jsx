@@ -1,14 +1,15 @@
 "use client";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { useRouter } from "next/navigation";
 import { message, Modal } from "antd";
-
+import '@ant-design/v5-patch-for-react-19';
 const Signup = () => {
   const [mobileno, setMobileno] = useState("");
   const [loading, setLoading] = useState(false);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [otp, setOtp] = useState(["", "", "", "", "", ""]); 
   const [sessionId, setSessionId] = useState("");
+  const otpRefs = useRef([]); // References for OTP inputs
   const router = useRouter();
 
   // Phone number validation
@@ -17,9 +18,23 @@ const Signup = () => {
   // Handle OTP input change
   const handleOtpChange = (e, index) => {
     const value = e.target.value;
+
+    if (!/^\d?$/.test(value)) return; // Allow only numeric input
+
     const newOtp = [...otp];
     newOtp[index] = value;
     setOtp(newOtp);
+
+    if (value && index < otp.length - 1) {
+      otpRefs.current[index + 1]?.focus(); // Move to next input if number is entered
+    }
+  };
+
+  // Handle backspace in OTP input
+  const handleOtpKeyDown = (e, index) => {
+    if (e.key === "Backspace" && !otp[index] && index > 0) {
+      otpRefs.current[index - 1]?.focus(); // Move to previous input on backspace if empty
+    }
   };
 
   const handleSubmit = async (e) => {
@@ -77,7 +92,7 @@ const Signup = () => {
       if (response.ok) {
         message.success("OTP verified successfully!");
         setIsModalVisible(false);
-        router.push("/");
+        router.push("/user-login");
       } else {
         message.error(data.message || "OTP verification failed");
       }
@@ -143,6 +158,8 @@ const Signup = () => {
                 type="text"
                 value={digit}
                 onChange={(e) => handleOtpChange(e, index)}
+                onKeyDown={(e) => handleOtpKeyDown(e, index)}
+                ref={(el) => (otpRefs.current[index] = el)} // Assign reference
                 className="w-14 h-14 text-center text-2xl font-extrabold text-slate-900 bg-slate-100 border border-transparent hover:border-slate-200 appearance-none rounded p-4 outline-none focus:bg-white focus:border-indigo-400 focus:ring-2 focus:ring-indigo-100"
                 maxLength="1"
               />

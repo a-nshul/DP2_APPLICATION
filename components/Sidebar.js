@@ -10,7 +10,7 @@ const Sidebar = () => {
   const router = useRouter();
   const handlelogout = () => {
     localStorage.removeItem("token");
-    router.push("/");
+    router.push("/user-login");
   };
   return (
     <Sider className="h-screen bg-gray-800 text-white" width={250}>

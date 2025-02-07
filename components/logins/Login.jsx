@@ -22,10 +22,26 @@ const Login = () => {
   // Handle OTP input change
   const handleOtpChange = (e, index) => {
     const value = e.target.value;
+  
+    if (!/^[0-9]?$/.test(value)) return; // Allow only single digit numbers
+  
     const newOtp = [...otp];
     newOtp[index] = value;
     setOtp(newOtp);
+  
+    // Move focus to next input box if current input is filled
+    if (value !== "" && index < otp.length - 1) {
+      document.getElementById(`otp-${index + 1}`).focus();
+    }
   };
+  
+  // Handle backspace key to move focus to previous box
+  const handleKeyDown = (e, index) => {
+    if (e.key === "Backspace" && !otp[index] && index > 0) {
+      document.getElementById(`otp-${index - 1}`).focus();
+    }
+  };
+  
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -133,11 +149,21 @@ const Login = () => {
           <div>
             <div className="flex justify-center gap-3 mb-4">
               {otp.map((digit, index) => (
+                // <input
+                //   key={index}
+                //   type="text"
+                //   value={digit}
+                //   onChange={(e) => handleOtpChange(e, index)}
+                //   className="w-14 h-14 text-center text-2xl font-extrabold text-slate-900 bg-slate-100 border border-transparent hover:border-slate-200 appearance-none rounded p-4 outline-none focus:bg-white focus:border-indigo-400 focus:ring-2 focus:ring-indigo-100"
+                //   maxLength="1"
+                // />
                 <input
                   key={index}
+                  id={`otp-${index}`} // Unique ID for each input
                   type="text"
                   value={digit}
                   onChange={(e) => handleOtpChange(e, index)}
+                  onKeyDown={(e) => handleKeyDown(e, index)}
                   className="w-14 h-14 text-center text-2xl font-extrabold text-slate-900 bg-slate-100 border border-transparent hover:border-slate-200 appearance-none rounded p-4 outline-none focus:bg-white focus:border-indigo-400 focus:ring-2 focus:ring-indigo-100"
                   maxLength="1"
                 />
