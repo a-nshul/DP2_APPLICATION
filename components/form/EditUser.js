@@ -6,86 +6,86 @@ import Sidebar from "../Sidebar";
 import Axios from "axios";
 import HeaderComponent from "../Header";
 const { Option } = Select;
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 const EditUser = () => {
   const router = useRouter();
   const [form] = Form.useForm();
   const [fileList, setFileList] = useState([]);
   const handleUpload = ({ fileList }) => setFileList(fileList);
-  const searchParams = useSearchParams();
-  const userId = searchParams.get("id"); // Get user ID from URL
+  // const searchParams = useSearchParams();
+  // const userId = searchParams.get("id"); // Get user ID from URL
   const [loading, setLoading] = useState(true);
   const onFinish = (values) => {
     console.log("Form Submitted:", values);
   };
-  useEffect(() => {
-    if (!userId) {
-      message.error("Invalid user ID.");
-      router.push("/");
-      return;
-    }
+  // useEffect(() => {
+  //   if (!userId) {
+  //     message.error("Invalid user ID.");
+  //     router.push("/");
+  //     return;
+  //   }
 
-    const fetchUserDetails = async () => {
-      try {
-        // const token = localStorage.getItem("token");
-        const response = await Axios.get(
-          `http://localhost:3001/api/user/getprofile?id=${userId}`,
-          // {
-          //   headers: { Authorization: `Bearer ${token}` },
-          // }
-        );
+  //   const fetchUserDetails = async () => {
+  //     try {
+  //       // const token = localStorage.getItem("token");
+  //       const response = await Axios.get(
+  //         `http://localhost:3001/api/user/getprofile?id`,
+  //         // {
+  //         //   headers: { Authorization: `Bearer ${token}` },
+  //         // }
+  //       );
 
-        if (response.data.users.length > 0) {
-          const userData = response.data.users[0];
-          form.setFieldsValue({
-            name: userData.personalDetails?.fullName || "",
-            email: userData.contactInformation?.email || "",
-            secondaryEmail:userData.contactInformation?.secondaryEmail || "",
-            phone: userData.mobileno || "",
-            currentAddress: userData.addressDetails?.currentAddress || "",
-            permanentAddress: userData.addressDetails?.permanentAddress || "",
-            // dateOfBirth:userData.personalDetails?.dateOfBirth || "",
-            gender:userData.personalDetails?.gender || "",
-            profilePhoto: userData.personalDetails?.profilePhoto || "",
-            city: userData.addressDetails?.city || "",
-            state: userData.addressDetails?.state || "",
-            zipPostalCode: userData.addressDetails?.zipPostalCode || "",
-            landmark: userData.addressDetails?.landmark || "",
-            parentsOccupation:userData.matrimonyDetails?.familyDetails?.parentsOccupation ||"",
-            siblings:userData.matrimonyDetails?.familyDetails?.siblings || "",
-            employerName:userData.professionalDetails?.previousEmployers?.employerName ||"",
-            // resume: userData.documentUploads?.resume || "",
-            // idProof: userData.documentUploads?.idProof || "",
-            // addressProof: userData.documentUploads?.addressProof || "",
-            currentJobDetails: userData.professionalDetails?.currentJobDetails || "",
-            employerCompanyName: userData.professionalDetails?.employerCompanyName || "",
-            workExperience: userData.professionalDetails?.workExperience || "",
-            skillsAndCertifications: userData.professionalDetails?.skillsAndCertifications || [],
-            languagesKnown: userData.professionalDetails?.languagesKnown || [],
-            roleAndResponsibilities:userData.professionalDetails?.roleAndResponsibilities || [],
-            maritalStatus: userData.matrimonyDetails?.maritalStatus || [],
-            religionCaste: userData.matrimonyDetails?.religionCaste || [],
-            heightWeight: userData.matrimonyDetails?.heightWeight || [],
-            dietaryPreferences: userData.matrimonyDetails?.dietaryPreferences || [],
-            hobbiesAndInterests: userData.matrimonyDetails?.hobbiesAndInterests || [],
-            ageRange: userData.matrimonyDetails?.preferredPartnerDetails?.ageRange || "",
-            height : userData.matrimonyDetails?.preferredPartnerDetails?.height || "",
-            location: userData.matrimonyDetails?.preferredPartnerDetails?.location || "",
-            preferences:userData.matrimonyDetails?.preferredPartnerDetails?.preferences ||"",
-          });
-        } else {
-          message.error("User not found.");
-        }
-      } catch (error) {
-        console.error("Error fetching user data:", error);
-        message.error("Failed to fetch user data.");
-      } finally {
-        setLoading(false);
-      }
-    };
+  //       if (response.data.users.length > 0) {
+  //         const userData = response.data.users[0];
+  //         form.setFieldsValue({
+  //           name: userData.personalDetails?.fullName || "",
+  //           email: userData.contactInformation?.email || "",
+  //           secondaryEmail:userData.contactInformation?.secondaryEmail || "",
+  //           phone: userData.mobileno || "",
+  //           currentAddress: userData.addressDetails?.currentAddress || "",
+  //           permanentAddress: userData.addressDetails?.permanentAddress || "",
+  //           // dateOfBirth:userData.personalDetails?.dateOfBirth || "",
+  //           gender:userData.personalDetails?.gender || "",
+  //           profilePhoto: userData.personalDetails?.profilePhoto || "",
+  //           city: userData.addressDetails?.city || "",
+  //           state: userData.addressDetails?.state || "",
+  //           zipPostalCode: userData.addressDetails?.zipPostalCode || "",
+  //           landmark: userData.addressDetails?.landmark || "",
+  //           parentsOccupation:userData.matrimonyDetails?.familyDetails?.parentsOccupation ||"",
+  //           siblings:userData.matrimonyDetails?.familyDetails?.siblings || "",
+  //           employerName:userData.professionalDetails?.previousEmployers?.employerName ||"",
+  //           // resume: userData.documentUploads?.resume || "",
+  //           // idProof: userData.documentUploads?.idProof || "",
+  //           // addressProof: userData.documentUploads?.addressProof || "",
+  //           currentJobDetails: userData.professionalDetails?.currentJobDetails || "",
+  //           employerCompanyName: userData.professionalDetails?.employerCompanyName || "",
+  //           workExperience: userData.professionalDetails?.workExperience || "",
+  //           skillsAndCertifications: userData.professionalDetails?.skillsAndCertifications || [],
+  //           languagesKnown: userData.professionalDetails?.languagesKnown || [],
+  //           roleAndResponsibilities:userData.professionalDetails?.roleAndResponsibilities || [],
+  //           maritalStatus: userData.matrimonyDetails?.maritalStatus || [],
+  //           religionCaste: userData.matrimonyDetails?.religionCaste || [],
+  //           heightWeight: userData.matrimonyDetails?.heightWeight || [],
+  //           dietaryPreferences: userData.matrimonyDetails?.dietaryPreferences || [],
+  //           hobbiesAndInterests: userData.matrimonyDetails?.hobbiesAndInterests || [],
+  //           ageRange: userData.matrimonyDetails?.preferredPartnerDetails?.ageRange || "",
+  //           height : userData.matrimonyDetails?.preferredPartnerDetails?.height || "",
+  //           location: userData.matrimonyDetails?.preferredPartnerDetails?.location || "",
+  //           preferences:userData.matrimonyDetails?.preferredPartnerDetails?.preferences ||"",
+  //         });
+  //       } else {
+  //         message.error("User not found.");
+  //       }
+  //     } catch (error) {
+  //       console.error("Error fetching user data:", error);
+  //       message.error("Failed to fetch user data.");
+  //     } finally {
+  //       setLoading(false);
+  //     }
+  //   };
 
-    fetchUserDetails();
-  }, [userId, form, router]);
+  //   fetchUserDetails();
+  // }, [userId, form, router]);
 
   const handleUpdate = async (values) => {
     try {
@@ -98,7 +98,7 @@ const EditUser = () => {
   
       // Sending the request with the token in headers
       await Axios.put(
-        `http://localhost:3001/api/user/updateprofile/${userId}`,
+        `http://localhost:3001/api/user/updateprofile/`,
         values,
         // {
         //   headers: { Authorization: `Bearer ${token}` },
@@ -120,7 +120,6 @@ const EditUser = () => {
   };
   
   return (
-    <Suspense fallback={<p>Loading...</p>}>
     <div className="flex">
      <div className="fixed top-0 left-0 w-64 h-full bg-gray-800">
         <Sidebar />
@@ -327,7 +326,6 @@ const EditUser = () => {
     </div>
     </div>
     </div>
-    </Suspense>
   );
 };
 
