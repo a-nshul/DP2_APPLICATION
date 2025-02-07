@@ -32,7 +32,7 @@ const Signup = () => {
     setLoading(true);
 
     try {
-      const response = await fetch("http://localhost:3001/api/user/signup", {
+      const response = await fetch("http://3.108.237.132:3001/api/user/signup", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ mobileno }),
@@ -62,7 +62,7 @@ const Signup = () => {
     }
 
     try {
-      const response = await fetch("http://localhost:3001/api/user/signup/verify", {
+      const response = await fetch("http://3.108.237.132:3001/api/user/signup/verify", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -122,7 +122,7 @@ const Signup = () => {
 
           {/* Login Button */}
           <button
-            onClick={() => router.push('/')}
+            onClick={() => router.push('/user-login')}
             className="w-full py-3 text-lg font-semibold text-indigo-600 rounded-md hover:bg-indigo-100 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-opacity-50 transition-all duration-300"
           >
             Login

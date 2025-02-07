@@ -18,7 +18,7 @@ const AdminLogin = () => {
     setLoading(true);
 
     try {
-      const response = await axios.post("http://localhost:3001/api/admin/login", {
+      const response = await axios.post("http://3.108.237.132:3001/api/admin/login", {
         email,
         password,
       });

@@ -23,7 +23,7 @@ function AdminSignup() {
     setLoading(true);
 
     try {
-      const res = await axios.post("http://localhost:3001/api/admin/signup", formData);
+      const res = await axios.post("http://3.108.237.132:3001/api/admin/signup", formData);
 
       console.log("API Response:", res.data); // Debugging
 

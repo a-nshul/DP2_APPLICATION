@@ -28,7 +28,7 @@ const Form = () => {
         setUserId(storedUserId);
     
         const response = await Axios.get(
-          `http://localhost:3001/api/user/getprofile?id=${storedUserId}`,
+          `http://3.108.237.132:3001/api/user/getprofile?id=${storedUserId}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,

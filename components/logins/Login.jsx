@@ -39,7 +39,7 @@ const Login = () => {
     setLoading(true);
 
     try {
-      const response = await axios.post("http://localhost:3001/api/user/login", { mobileno });
+      const response = await axios.post("http://3.108.237.132:3001/api/user/login", { mobileno });
 
       // Check if response is successful and sessionId exists
       if (response.data.sessionId) {
@@ -64,7 +64,7 @@ const Login = () => {
     }
   
     try {
-      const response = await axios.post("http://localhost:3001/api/user/login/verify", {
+      const response = await axios.post("http://3.108.237.132:3001/api/user/login/verify", {
         mobileno,
         sessionId, // Include sessionId in the request
         otp: otpCode,
