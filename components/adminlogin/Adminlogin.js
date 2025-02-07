@@ -91,12 +91,12 @@ const AdminLogin = () => {
         </form>
 
         {/* Sign Up Button */}
-        <button
+        {/* <button
           onClick={() => router.push("/admin-signup")}
           className="w-full mt-4 py-3 text-lg font-semibold text-indigo-600 rounded-md hover:bg-indigo-100 focus:outline-none focus:ring-2 focus:ring-indigo-500"
         >
           Sign Up
-        </button>
+        </button> */}
 
         {/* Back Button */}
         <button
