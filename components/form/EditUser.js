@@ -1,5 +1,5 @@
 "use client";
-import React, { useState ,useEffect,Suspense} from "react";
+import React, { useState ,useEffect} from "react";
 import { Form, Input, DatePicker, Select, Upload, Button, Card ,message} from "antd";
 import { UploadOutlined ,ArrowLeftOutlined} from "@ant-design/icons";
 import Sidebar from "../Sidebar"; 
@@ -120,7 +120,6 @@ const EditUser = () => {
   };
   
   return (
-    <Suspense>
     <div className="flex">
      <div className="fixed top-0 left-0 w-64 h-full bg-gray-800">
         <Sidebar />
@@ -327,7 +326,6 @@ const EditUser = () => {
     </div>
     </div>
     </div>
-    </Suspense>
   );
 };
 
