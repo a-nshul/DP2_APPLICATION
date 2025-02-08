@@ -29,7 +29,7 @@ const EditUser = () => {
   //     try {
   //       // const token = localStorage.getItem("token");
   //       const response = await Axios.get(
-  //         `http://localhost:3001/api/user/getprofile?id`,
+  //         `http://3.108.237.132:3001/api/user/getprofile?id`,
   //         // {
   //         //   headers: { Authorization: `Bearer ${token}` },
   //         // }
@@ -98,7 +98,7 @@ const EditUser = () => {
   
       // Sending the request with the token in headers
       await Axios.put(
-        `http://localhost:3001/api/user/updateprofile/`,
+        `http://3.108.237.132:3001/api/user/updateprofile/`,
         values,
         // {
         //   headers: { Authorization: `Bearer ${token}` },

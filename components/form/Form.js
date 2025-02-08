@@ -63,7 +63,7 @@ const Form = () => {
 
   const fetchUserResponses = async (userId) => {
     try {
-      const response = await Axios.get(`http://localhost:3001/api/response/user/${userId}`);
+      const response = await Axios.get(`http://3.108.237.132:3001/api/response/user/${userId}`);
       if (response.data.responses && response.data.responses.length > 0) {
         setUserResponses(response.data.responses);
         setModalVisible(true);

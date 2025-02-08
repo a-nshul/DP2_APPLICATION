@@ -34,7 +34,7 @@ const ManageData = () => {
 
         // Fetch existing fields
         const response = await Axios.get(
-          `http://localhost:3001/api/user/getprofile/${storedUserId}`,
+          `http://3.108.237.132:3001/api/user/getprofile/${storedUserId}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -96,7 +96,7 @@ const ManageData = () => {
     try {
       const token = localStorage.getItem("token");
       await Axios.put(
-        `http://localhost:3001/api/user/updateprofile/${userId}`,
+        `http://3.108.237.132:3001/api/user/updateprofile/${userId}`,
         { userId, fields },
         {
           headers: {
@@ -126,7 +126,7 @@ const ManageData = () => {
       }));
 
       const response = await Axios.post(
-        `http://localhost:3001/api/response/submit`,
+        `http://3.108.237.132:3001/api/response/submit`,
         { userId, answers },
         {
           headers: {
