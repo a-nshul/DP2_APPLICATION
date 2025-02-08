@@ -1,6 +1,6 @@
 "use client";
-import { Layout, Table, message } from "antd";
-import { EditOutlined } from "@ant-design/icons";
+import { Layout, Table, message, Modal } from "antd";
+import { EditOutlined, EyeOutlined } from "@ant-design/icons";
 import Sidebar from "../Sidebar";
 import HeaderComponent from "../Header";
 import { useRouter } from "next/navigation";
@@ -15,6 +15,8 @@ const Form = () => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [userId, setUserId] = useState(null);
+  const [modalVisible, setModalVisible] = useState(false);
+  const [userResponses, setUserResponses] = useState([]);
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -36,16 +38,12 @@ const Form = () => {
           }
         );
     
-        // ✅ Check if `users` array exists and has data
         if (response.data.users && response.data.users.length > 0) {
-          const userData = response.data.users[0]; // Get first user object
-    
+          const userData = response.data.users[0];
           const formattedData = [
             {
               key: userData._id,
               index: 1,
-              name: userData.personalDetails?.fullName || "N/A",
-              email: userData.contactInformation?.email || "N/A",
               phone: userData.mobileno || "N/A",
             },
           ];
@@ -63,39 +61,47 @@ const Form = () => {
     fetchUserData();
   }, []);
 
+  const fetchUserResponses = async (userId) => {
+    try {
+      const response = await Axios.get(`http://localhost:3001/api/response/user/${userId}`);
+      if (response.data.responses && response.data.responses.length > 0) {
+        setUserResponses(response.data.responses);
+        setModalVisible(true);
+      } else {
+        message.info("No responses found for this user.");
+      }
+    } catch (error) {
+      console.error("Error fetching user responses:", error);
+      message.error("Error fetching user responses.");
+    }
+  };
+
   const columns = [
     {
-      title: <span className="text-gray-700 font-semibold text-lg">S.No</span>,
+      title: "S.No",
       dataIndex: "index",
       key: "index",
-      render: (_, __, index) => <span className="text-gray-600">{index + 1}</span>,
+      render: (_, __, index) => index + 1,
     },
     {
-      title: <span className="text-gray-700 font-semibold text-lg">Name</span>,
-      dataIndex: "name",
-      key: "name",
-      render: (text) => <span className="text-black font-medium">{text}</span>,
-    },
-    {
-      title: <span className="text-gray-700 font-semibold text-lg">Email</span>,
-      dataIndex: "email",
-      key: "email",
-      render: (text) => <span className="text-gray-700">{text}</span>,
-    },
-    {
-      title: <span className="text-gray-700 font-semibold text-lg">Phone Number</span>,
+      title: "Phone Number",
       dataIndex: "phone",
       key: "phone",
-      render: (text) => <span className="text-gray-700">{text}</span>,
     },
     {
-      title: <span className="text-gray-700 font-semibold text-lg">Action</span>,
+      title: "Actions",
       key: "action",
       render: (_, record) => (
-        <EditOutlined
-          className="text-blue-600 hover:text-blue-800 cursor-pointer text-lg transition-colors duration-200 ease-in-out"
-          onClick={() => router.push(`/edit-user?id=${record.key}`)}
-        />
+        <div className="flex space-x-4">
+          <EditOutlined
+            className="text-blue-600 hover:text-blue-800 cursor-pointer text-lg"
+            onClick={() => router.push(`/manage-data`)}
+          />
+          <EyeOutlined
+            className="text-green-600 hover:text-green-800 cursor-pointer text-lg"
+            onClick={() => fetchUserResponses(record.key)}
+          />
+        </div>
       ),
     },
   ];
@@ -106,18 +112,27 @@ const Form = () => {
       <Layout className="site-layout">
         <HeaderComponent />
         <Content className="p-6 bg-gray-100">
-          <div className="flex justify-between items-center mb-6">
-            <h1 className="text-3xl font-bold text-black">User List</h1>
-          </div>
-          <Table 
-            columns={columns} 
-            dataSource={data} 
-            pagination={{ pageSize: 5 }} 
-            loading={loading} 
-            className="shadow-lg rounded-lg overflow-hidden"
-          />
+          <h1 className="text-3xl font-bold text-black mb-6">User List</h1>
+          <Table columns={columns} dataSource={data} pagination={{ pageSize: 5 }} loading={loading} />
         </Content>
       </Layout>
+      <Modal
+        title="User Submitted Data"
+        visible={modalVisible}
+        onCancel={() => setModalVisible(false)}
+        footer={null}
+      >
+        {userResponses.map((response, index) => (
+          <div key={response._id} className="mb-4 p-2 border-b">
+            <h3 className="text-lg font-semibold">Response {index + 1}</h3>
+            {response.answers.map((answer) => (
+              <p key={answer._id}>
+                <strong>{answer.question}:</strong> {answer.answer}
+              </p>
+            ))}
+          </div>
+        ))}
+      </Modal>
     </Layout>
   );
 };

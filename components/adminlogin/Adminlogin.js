@@ -27,7 +27,7 @@ const AdminLogin = () => {
         message.success("Login successful!");
         localStorage.setItem("adminToken", response.data.token);
         localStorage.setItem("admin", JSON.stringify(response.data.admin));
-        router.push("/admin/dashboard");
+        router.push("/admin-user");
       } else {
         message.error("Invalid credentials, please try again.");
       }
