@@ -93,14 +93,14 @@ const Form = () => {
       key: "action",
       render: (_, record) => (
         <div className="flex space-x-4">
-          <EditOutlined
+          {/* <EditOutlined
             className="text-blue-600 hover:text-blue-800 cursor-pointer text-lg"
             onClick={() => router.push(`/manage-data`)}
-          />
-          {/* <EyeOutlined
+          /> */}
+          <EyeOutlined
             className="text-green-600 hover:text-green-800 cursor-pointer text-lg"
             onClick={() => fetchUserResponses(record.key)}
-          /> */}
+          />
         </div>
       ),
     },
