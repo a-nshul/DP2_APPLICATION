@@ -117,22 +117,41 @@ const Form = () => {
         </Content>
       </Layout>
       <Modal
-        title="User Submitted Data"
-        visible={modalVisible}
-        onCancel={() => setModalVisible(false)}
-        footer={null}
-      >
-        {userResponses.map((response, index) => (
-          <div key={response._id} className="mb-4 p-2 border-b">
-            <h3 className="text-lg font-semibold">Response {index + 1}</h3>
-            {response.answers.map((answer) => (
-              <p key={answer._id}>
-                <strong>{answer.question}:</strong> {answer.answer}
-              </p>
-            ))}
-          </div>
-        ))}
-      </Modal>
+      title={
+        <div className="bg-gradient-to-r from-blue-500 to-purple-600 text-white p-3 rounded-t-md text-xl font-semibold">
+          User Submitted Data
+        </div>
+      }
+      open={modalVisible}
+      onCancel={() => setModalVisible(false)}
+      footer={null}
+      className="rounded-lg shadow-xl"
+    >
+      <div className="p-4 bg-gray-50 rounded-b-md">
+        {userResponses.length > 0 ? (
+          userResponses.map((response, index) => (
+            <div
+              key={response._id}
+              className="mb-4 p-4 border border-gray-200 bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300"
+            >
+              <h3 className="text-lg font-semibold text-blue-600">
+                Response {index + 1}
+              </h3>
+              <div className="mt-2 space-y-2">
+                {response.answers.map((answer) => (
+                  <p key={answer._id} className="text-gray-700">
+                    <strong className="text-gray-900">{answer.question}:</strong>{" "}
+                    {answer.answer}
+                  </p>
+                ))}
+              </div>
+            </div>
+          ))
+        ) : (
+          <p className="text-gray-500 text-center">No responses available.</p>
+        )}
+      </div>
+    </Modal>
     </Layout>
   );
 };
