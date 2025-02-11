@@ -96,7 +96,7 @@ const Form = () => {
       // Ensure _id inside updatedResponse is a valid ObjectId
       const formattedResponse = { ...editedResponse, _id: responseId };
   
-      await Axios.put(`http://localhost:3001/api/response/update/${responseId}`, formattedResponse);
+      await Axios.put(`http://3.108.237.132:3001/api/response/update/${responseId}`, formattedResponse);
   
       message.success("Response updated successfully!");
       setUserResponses((prev) =>
@@ -113,7 +113,7 @@ const Form = () => {
 
   const handleDelete = async (responseId) => {
     try {
-      await Axios.delete(`http://localhost:3001/api/response/delete/${responseId}`);
+      await Axios.delete(`http://3.108.237.132:3001/api/response/delete/${responseId}`);
 
       message.success("Response deleted successfully!");
       setUserResponses((prev) => prev.filter((res) => res._id !== responseId));
